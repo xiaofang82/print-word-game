@@ -98,7 +98,9 @@ function displayEnd(){
 function disappearStart(){
     const startContainer = select('.start-container');
     
-    backgroudAudio.play();
+    backgroudAudio.play().catch(error => {
+        console.error('Failed to play audio:', error);
+      });;
     startContainer.style.visibility = 'hidden';
     const numberF = select('.cd-number-five');
     numberF.innerHTML = '3';
@@ -113,7 +115,9 @@ function appearStart(){
     const numberF = select('.cd-number-five');
     const alarmSong = new Audio('./assets/audio/start.wav');
 
-    alarmSong.play();
+    alarmSong.play().catch(error => {
+        console.error('Failed to play audio:', error);
+      });
     backgroudAudio.pause();
     backgroudAudio.load();
     startContainer.style.visibility = 'visible';
