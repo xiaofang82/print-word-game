@@ -115,6 +115,8 @@ function appearStart(){
     const numberF = select('.cd-number-five');
     const alarmSong = new Audio('./assets/audio/start.wav');
 
+    score.innerHTML = '0'
+
     alarmSong.play().catch(error => {
         console.error('Failed to play audio:', error);
       });
