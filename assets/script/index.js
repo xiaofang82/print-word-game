@@ -34,6 +34,7 @@ const restart = selectById('restart');
 const restart2 = selectById('restart2');
 const count = select('.count');
 const startContainer = select('.start-container');
+const backgroudAudio = new Audio('../assets/audio/background.mp3');
 
 
 let wordsInitLen = words.length;
@@ -87,7 +88,7 @@ function displayEnd(){
     //console.log(scoreOjb.getScore());
     modalContainer.classList.add('model_show');
     model.classList.add('modal-transform');
-
+    
     userinfo.innerHTML = `<p><span>Date</span>: ${scoreOjb.date}</p>`;
     userinfo.innerHTML += `<p><span>Hits</span>: ${scoreOjb.hits}</p>`;
     userinfo.innerHTML += `<p><span>Percentage</span>: ${scoreOjb.percentage}</p>`;
@@ -96,6 +97,8 @@ function displayEnd(){
     
 function disappearStart(){
     const startContainer = select('.start-container');
+    
+    backgroudAudio.play();
     startContainer.style.visibility = 'hidden';
     const numberF = select('.cd-number-five');
     numberF.innerHTML = '3';
@@ -111,6 +114,8 @@ function appearStart(){
     const alarmSong = new Audio('../assets/audio/start.wav');
 
     alarmSong.play();
+    backgroudAudio.pause();
+    backgroudAudio.load();
     startContainer.style.visibility = 'visible';
     clock.stop();
     let time = 4;

@@ -20,7 +20,7 @@ clock={
 					clock.stop();
 				break;
 			}*/
-            clock.start(10);
+            clock.start(99);
 		//});
 	},
 	start:function(t){
