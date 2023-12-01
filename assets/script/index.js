@@ -60,12 +60,12 @@ onEvent('keyup', input, function(event){
 
 onEvent('click', restart, function(){
     fill.style.width = '0%';
-    score.style.value = 0;
+    score.style.innerHTML = 0;
     appearStart();
 });
 onEvent('click', restart2, function(){
     fill.style.width = '0%';
-    score.style.value = 0;
+    score.style.innerHTML = 0;
     const model = selectById('model');
     const modalContainer = select('.modal-container');
     modalContainer.classList.remove('model_show');
