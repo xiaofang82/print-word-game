@@ -34,7 +34,7 @@ const restart = selectById('restart');
 const restart2 = selectById('restart2');
 const count = select('.count');
 const startContainer = select('.start-container');
-const backgroudAudio = new Audio('../assets/audio/background.mp3');
+const backgroudAudio = new Audio('./assets/audio/background.mp3');
 
 
 let wordsInitLen = words.length;
@@ -111,7 +111,7 @@ function disappearStart(){
 function appearStart(){
     const startContainer = select('.start-container');
     const numberF = select('.cd-number-five');
-    const alarmSong = new Audio('../assets/audio/start.wav');
+    const alarmSong = new Audio('./assets/audio/start.wav');
 
     alarmSong.play();
     backgroudAudio.pause();
