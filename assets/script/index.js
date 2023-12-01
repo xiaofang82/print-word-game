@@ -23,8 +23,8 @@ const words = [
     'rebel', 'amber', 'jacket', 'article', 'paradox', 'social', 'resort', 'escape'
    ];
 
-
-
+const clone = words;
+//console.log(clone);
 const load = select('.load');
 const wordsObj = select('.words');
 const input = selectById('input');
@@ -35,11 +35,12 @@ const restart2 = selectById('restart2');
 const count = select('.count');
 const startContainer = select('.start-container');
 const backgroudAudio = new Audio('./assets/audio/background.mp3');
-
+var hits = parseInt(score.innerText);
+console.log(hits);
 
 let wordsInitLen = words.length;
 let perCount = wordsInitLen / 100;
-let hits = 0;
+
 //console.log(perCount);
 
 
@@ -114,7 +115,7 @@ function appearStart(){
     const startContainer = select('.start-container');
     const numberF = select('.cd-number-five');
     const alarmSong = new Audio('./assets/audio/start.wav');
-
+    
     score.innerHTML = '0'
 
     alarmSong.play().catch(error => {
@@ -145,7 +146,7 @@ function randomWord(wordsInitLen){
     input.value = '';
     words.splice(randomNum,1);
     wordsObj.innerHTML = word;
-    fill.style.width = `${((wordsInitLen - words.length) / wordsInitLen).toFixed(4) * 100}%`;
+    fill.style.width = `${((hits + 1) / wordsInitLen).toFixed(4) * 100}%`;
     return words.length;
 
     //console.log(fill.style.width);
