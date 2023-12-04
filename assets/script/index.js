@@ -35,6 +35,10 @@ const restart2 = selectById('restart2');
 const count = select('.count');
 const startContainer = select('.start-container');
 const backgroudAudio = new Audio('./assets/audio/background.mp3');
+const alarmSong = new Audio('./assets/audio/start.wav');
+alarmSong.load();
+backgroudAudio.load();
+
 var hits = parseInt(score.innerText);
 console.log(hits);
 
@@ -114,15 +118,14 @@ function disappearStart(){
 function appearStart(){
     const startContainer = select('.start-container');
     const numberF = select('.cd-number-five');
-    const alarmSong = new Audio('./assets/audio/start.wav');
-    
+    hits = 0;
     score.innerHTML = '0'
-
+    
     alarmSong.play().catch(error => {
         console.error('Failed to play audio:', error);
       });
-    backgroudAudio.pause();
-    backgroudAudio.load();
+    //backgroudAudio.pause();
+    //backgroudAudio.load();
     startContainer.style.visibility = 'visible';
     clock.stop();
     let time = 4;
