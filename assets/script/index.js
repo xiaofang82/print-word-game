@@ -81,6 +81,7 @@ onEvent('click', restart, function(){
     input.disabled = false;
     scoreboard.style.display = 'none';
     container.style.width = '100%';
+    scoreboard.innerHTML = '';
 
 });
 onEvent('click', restart2, function(){
@@ -97,6 +98,7 @@ onEvent('click', restart2, function(){
     score.innerHTML = 0;
      wordsObj.innerHTML = '';
     input.value = '';
+    scoreboard.innerHTML = '';
         
     appearStart();
 
@@ -124,6 +126,7 @@ function initial(){
     wordsObj.innerHTML = '';
     input.disabled = true;
     input.value = '';
+    scoreboard.innerHTML = '';
     clock.stop();
 
 }
