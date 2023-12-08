@@ -22,7 +22,7 @@ const words = [
     'audio', 'school', 'detective', 'hero', 'progress', 'winter', 'passion',
     'rebel', 'amber', 'jacket', 'article', 'paradox', 'social', 'resort', 'escape'
    ];
-
+   //localStorage.clear();
 const clone = words;
 //console.log(clone);
 const load = select('.load');
@@ -33,22 +33,22 @@ const fill = selectById('fill');
 const restart = selectById('restart');
 const restart2 = selectById('restart2');
 const count = select('.count');
-const startContainer = select('.start-container');
+const scoreboard = select('.scoreboard');
+const rowPress = select('.row-press');
+const container = select('.container');
+const model = document.getElementById('model');
+const modalContainer = document.querySelector('.modal-container');
+
 const backgroudAudio = new Audio('./assets/audio/background.mp3');
-const alarmSong = new Audio('./assets/audio/start.wav');
-alarmSong.load();
+
 backgroudAudio.load();
 
 var hits = parseInt(score.innerText);
-console.log(hits);
+
 
 let wordsInitLen = words.length;
 let perCount = wordsInitLen / 100;
 
-//console.log(perCount);
-
-
-appearStart();
 
 onEvent('keyup', input, function(event){
     
@@ -56,95 +56,168 @@ onEvent('keyup', input, function(event){
         let leftLen = randomWord(wordsInitLen);
         hits++;
         score.innerText = hits;
-        if(leftLen <= 0){
-            
+        console.log(count.innerText);
+        if(leftLen <= 0 || count.innerText == '00' || count.innerText == '-  -'){
+            //initial();
             displayEnd();
         }
     }
 });
 
 onEvent('click', restart, function(){
-    fill.style.width = '0%';
-    score.style.innerHTML = 0;
+    if(restart.value == 'Restart'){
+        hits = 0;
+        fill.style.width = '0%';
+        count.innerText = '-  -'
+        score.innerHTML = 0;
+        wordsObj.innerHTML = '';
+        input.disabled = true;
+        input.value = '';
+        clock.stop();
+    }
     appearStart();
+    restart.value = 'Restart';
+    rowPress.style.display = 'none';
+    input.disabled = false;
+    scoreboard.style.display = 'none';
+    container.style.width = '100%';
+
 });
 onEvent('click', restart2, function(){
+   // initial()
+  
+   rowPress.style.display = 'none';
+   input.disabled = false;
+   restart.value = 'Restart';
+   scoreboard.style.display = 'none';
+   container.style.width = '100%';
+    hits = 0;
     fill.style.width = '0%';
-    score.style.innerHTML = 0;
-    const model = selectById('model');
+    count.innerText = '-  -'
+    score.innerHTML = 0;
+     wordsObj.innerHTML = '';
+    input.value = '';
+        
+    appearStart();
+
     const modalContainer = select('.modal-container');
     modalContainer.classList.remove('model_show');
     model.classList.remove('modal-transform');
-    appearStart();
+    
 });
 
+
 let interal = setInterval(function(){
-    if(count.innerText == '00'  && startContainer.style.visibility == 'hidden')
+    if(count.innerText == '00' || count.innerText == '-  -'){
+        //initial();
         displayEnd();
+    }
 },1000);
 
+function initial(){
+    hits = 0;
+    fill.style.width = '0%';
+    count.innerText = '-  -'
+    score.innerHTML = 0;
+    restart.value = 'START';
+    rowPress.style.display = 'block';
+    wordsObj.innerHTML = '';
+    input.disabled = true;
+    input.value = '';
+    clock.stop();
+
+}
+
 function displayEnd(){
+    count.innerText = '-  -'
     const model = selectById('model');
     const modalContainer = select('.modal-container');
     const userinfo = select('.userinfo');
     const score = selectById('score');
     const today = new Date();
-    const scoreOjb = new Score(today.toDateString(), parseInt(score.innerHTML), `${fill.style.width}`);
-    //console.log(scoreOjb.getScore());
+    let formattedDate = new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    }).format(today);
+    const scoreOjb = [
+        parseInt(score.innerHTML),
+        formattedDate,
+        fill.style.width
+    ];
+    storingLocal(scoreOjb);
+    initial();
     modalContainer.classList.add('model_show');
     model.classList.add('modal-transform');
     
-    userinfo.innerHTML = `<p><span>Date</span>: ${scoreOjb.date}</p>`;
-    userinfo.innerHTML += `<p><span>Hits</span>: ${scoreOjb.hits}</p>`;
-    userinfo.innerHTML += `<p><span>Percentage</span>: ${scoreOjb.percentage}</p>`;
+    userinfo.innerHTML = `<p><span>Date</span>: ${scoreOjb[1]}</p>`;
+    userinfo.innerHTML += `<p><span>Hits</span>: ${scoreOjb[0]}</p>`;
+    userinfo.innerHTML += `<p><span>Percentage</span>: ${scoreOjb[2]}</p>`;
+    showBoard();
+    
 }
 
+function storingLocal(scoreOjb){
+    let storageLen = localStorage.length;
+    let scores = [];
+    if(storageLen > 0) {  
+        scores = JSON.parse(localStorage.getItem('scores'));
+        scores.push(scoreOjb);
+    }else{
+        scores.push(scoreOjb);
+    }
+
+    //console.log(scores);
+    scores.sort((a, b)=>{
+        return b[0] - a[0];
+    });
+    scores.splice(10);
+    localStorage.clear();
+    localStorage.setItem('scores', JSON.stringify(scores));
+
     
-function disappearStart(){
-    const startContainer = select('.start-container');
     
+}
+
+function showBoard(){
+    const board = [];
+    const scoreboard = select('.scoreboard');
+    console.log(localStorage);
+    let list = JSON.parse(localStorage.getItem('scores'));
+    
+    
+    for (let item in list) {
+
+        scoreboard.innerHTML += `<p>`;
+        scoreboard.innerHTML += `<span class='score-show'> ${parseInt(item)+1} # </span>`;
+        scoreboard.innerHTML += `<span class='score-show'> ${list[item][0]} words</span>`;
+        scoreboard.innerHTML += `<span class='score-show'> ${list[item][2]} </span>`;
+        scoreboard.innerHTML += `<span class='score-show'> ${list[item][1]} </span>`; 
+        scoreboard.innerHTML += `</p>`;
+    }
+    
+    scoreboard.style.display = 'block';
+    container.style.width = 'calc( 100% - 250px)';
+}
+
+
+function appearStart(){
+
+    hits = 0;
+    score.innerHTML = '0';
     backgroudAudio.play().catch(error => {
         console.error('Failed to play audio:', error);
       });;
-    startContainer.style.visibility = 'hidden';
-    const numberF = select('.cd-number-five');
-    numberF.innerHTML = '3';
-    //setTimeout(displayEnd, 14000);
+    
     clock.init();
     randomWord();
-
-}
-
-function appearStart(){
-    const startContainer = select('.start-container');
-    const numberF = select('.cd-number-five');
-    hits = 0;
-    score.innerHTML = '0'
     
-    alarmSong.play().catch(error => {
-        console.error('Failed to play audio:', error);
-      });
-    //backgroudAudio.pause();
-    //backgroudAudio.load();
-    startContainer.style.visibility = 'visible';
-    clock.stop();
-    let time = 4;
-    let interal = setInterval(function(){
-        //console.log(time);
-        if(time > 0){
-            numberF.innerText = time - 1;
-            time--;
-        } else
-            clearInterval(interal);
-    },1000);
-    setTimeout(disappearStart, 4000);
-
-    //progressbar.init();
+    
 }
 
 function randomWord(wordsInitLen){
     let wordsLength = words.length;
-    let randomNum = (Math.random() * wordsLength).toFixed(0);
+    let randomNum = (Math.random() * (wordsLength - 1)).toFixed(0);
     let word = words[randomNum];
     input.value = '';
     words.splice(randomNum,1);
@@ -152,6 +225,12 @@ function randomWord(wordsInitLen){
     fill.style.width = `${((hits + 1) / wordsInitLen).toFixed(4) * 100}%`;
     return words.length;
 
-    //console.log(fill.style.width);
-    //console.log(words);
+
 }
+
+onEvent('click',window , function(event){
+    if(event.target == modalContainer){
+        modalContainer.classList.remove('model_show');
+        model.classList.remove('modal-transform');
+    }
+});

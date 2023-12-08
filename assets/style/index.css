@@ -7,8 +7,10 @@ main {
 }
 
 .container {
+    padding-left: 20px;
     margin-top: 20px;
-    width: 90%;
+
+    width: 100%;
     margin-inline: auto;
     height: 100vh;
 }
@@ -17,18 +19,47 @@ main {
     display: flex;
 }
 
+h1 {
+    color: #fff;
+    font-family: 'Rubik Bubbles','Crimson Pro', serif;
+    font-size: 48px;
+}
+
+.column {
+    float: left;
+}
+
+.scoreboard {
+    width: 250px;
+    height: 100dvh;
+    background-color: #ad70df;
+    color: #531067;
+    padding: 5px;
+    display: none;
+}
+
+.scoreboard p {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.score-show {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
 .row {
     width: 100%;
     margin: 0px;
     display: flex;
-    height: 80px;
+    
     justify-content: center; 
     align-items:end; 
 }
 
 .row-word {
-    padding-top: 150px;
-    margin-top: 150px;
+    padding-top: 80px;
+    margin-top: 100px;
     width: 100%;
     margin: 0px;
     display: flex;
@@ -36,7 +67,24 @@ main {
 }
 
 .row-input {
-    margin-top: 90px;
+    margin-top: 50px;
+}
+
+.row-start {
+    margin-top: 40px;
+}
+
+.row-press {
+    margin-top: 40px;
+    height: 40px;
+    width: 200px;
+    line-height: 40px;
+    background-color: #c390d784;
+    border-radius: 5px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(23, 23, 23);
 }
 
 .words {
@@ -52,6 +100,7 @@ main {
     outline: 2px solid #8e11b4;
     outline-offset: -5px;
     color: #531067;
+    user-select: none;
 }
 
 input[type=text] {
@@ -73,28 +122,59 @@ input[type=button] {
     cursor: pointer;
 }
 
+.top-circle{
+	width:120px;
+	height:120px;
+	border-radius:50%;
+	margin-top:0px;
+	background-color:#feeff4;
+    position: relative;
+    height: 120px;
+    text-align: center;
+    align-items: center;
+    line-height: 120px;
+    z-index: 0;
+}
+.top-circle:before{
+    content: '';
+    position: absolute;
+	top:50%;
+	left:50%;
+	width:80px;
+	height:80px;
+	margin-top:-40px;
+	margin-left:-40px;
+	border-radius:inherit;
+	background-color:#ec366b;
+	box-shadow:0 0 15px rgba(0,0,0,.15), 0 0 3px rgba(255,255,255,.75) inset;
+	z-index: 1;
+}
 .top-left {
-    width: 100px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.338);
-    border-radius: 5px;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background-color:#ec366b;
+    border-radius: 50%;
     vertical-align: middle;
     font-size: 14px;
     font-weight: bolder;
-    color: yellow;
-    line-height: 50px;
+    line-height: 80px;
     text-align: center;
 }
 
 #score {
-    color: red;
+    color: #fff;
+    font-size:32px;
+    z-index: 2;
+    position: relative;
 }
 
 .top-middle {
     width: calc(100% - 200px);
-    justify-content: center;
-    position: relative;
     padding-left: 5%;
+    flex-grow: 1;
+    text-align: center;
+    
 }
 
 .load {
@@ -102,7 +182,6 @@ input[type=button] {
     height: 20px;
     border-radius: 10px;
     border: 1px solid #fefefe;
-    /*background-color: rgb(70, 185, 25);*/
 }
 
 
@@ -135,7 +214,6 @@ input[type=button] {
 	box-shadow:0 0 15px rgba(0,0,0,.15);
 }
 .clock{
-	
 	width:120px;
 	height:120px;
 	border-radius:50%;
@@ -160,7 +238,7 @@ input[type=button] {
 	width:100%;
 	color:#fff;
 	height:100%;
-	padding:42px;
+	padding:38px 42px 42px 42px;
 	font-size:32px;
 	font-weight:500;
 	line-height:50px;

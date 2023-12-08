@@ -20,7 +20,7 @@ clock={
 					clock.stop();
 				break;
 			}*/
-            clock.start(99);
+            clock.start(15);
 		//});
 	},
 	start:function(t){
@@ -74,7 +74,7 @@ clock={
 	},
 	stop:function(){
 		clearInterval(clock.interval);
-		$('.count').text('00');
+		$('.count').text('-  -');
 		$('.clock').removeAttr('style');
 	}
 }

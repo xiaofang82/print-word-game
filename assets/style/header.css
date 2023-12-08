@@ -24,7 +24,7 @@
 }
 
 .modal-transform {
-    top: calc(50% - 300px);
+    top: calc(50% - 125px);
     right: calc(50% - 200px);
     transition: transform 1s;
     transform: translate(0, 15px);
