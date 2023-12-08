@@ -56,7 +56,7 @@ onEvent('keyup', input, function(event){
         let leftLen = randomWord(wordsInitLen);
         hits++;
         score.innerText = hits;
-        console.log(count.innerText);
+        //console.log(count.innerText);
         if(leftLen <= 0 || count.innerText == '00' || count.innerText == '-  -'){
             //initial();
             displayEnd();
